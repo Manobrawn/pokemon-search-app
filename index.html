@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Search App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>Pokémon Search App</h1>
+    <div class="container">
+        <form role="search" id="search-form">
+            <label for="search-input">Search for Pokémon name of ID</label>
+            <input type="text" name="pokemon" id="search-input" required> 
+            <button id="search-button">Search</button>
+        </form>
+        <div class="output">
+            <div class="top-container">
+                <div class="name-and-id">
+                    <span class="to-be-rended" id="pokemon-name"></span>
+                    <span class="to-be-rended" id="pokemon-id"></span>
+                </div>
+                <div class="size">
+                    <span class="to-be-rended" id="weight"></span>
+                    <span class="to-be-rended" id="height"></span>
+                </div>
+                <div class="sprite-container">
+                    <img class="to-be-rended" id="sprite"> <!-- IMAGE COMES HERE -->
+                </div>
+                <div class="to-be-rended" id="types"></div>
+            </div>
+            <div class="bottom-container">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Base</th>
+                            <th>Stats</th>   
+                        </tr>
+                        <tr>
+                            <td>HP:</td>
+                            <td class="to-be-rended" id="hp"></td>
+                        </tr>
+                        <tr>
+                            <td>Attack:</td>
+                            <td class="to-be-rended" id="attack"></td>
+                        </tr>
+                        <tr>
+                            <td>Defense:</td>
+                            <td class="to-be-rended" id="defense"></td>
+                        </tr>
+                        <tr>
+                            <td>Sp. Attack:</td>
+                            <td class="to-be-rended" id="special-attack"></td>
+                        </tr>
+                        <tr>
+                            <td>Sp. Defense:</td>
+                            <td class="to-be-rended" id="special-defense"></td>
+                        </tr>
+                        <tr>
+                            <td>Speed:</td>
+                            <td class="to-be-rended" id="speed"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
