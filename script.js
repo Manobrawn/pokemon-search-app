@@ -1,83 +1,51 @@
 const searchButton = document.getElementById('search-button');
-const searchInputElement = document.getElementById('search-input')
+const searchInputElement = document.getElementById('search-input');
 const toBeRended = document.querySelectorAll('.to-be-rended');
 const [nameSpan, pokemonIdSpan, weightSpan, heightSpan, spriteImg, typesDiv, hpTd, attackTd, defenseTd, specialAttackTd, specialDefenseTd, speedTd] = toBeRended;
 
-
-const pikachu = {
-    name: 'PIKACHU',
-    id: 25,
-    weight: 60,
-    height: 4,
-    hp: 35,
-    attack: 55,
-    defense: 40,
-    specialAttack: 50,
-    specialDefense: 50,
-    speed: 90,
-    imgSrc: 'front_default',
-    type: 'ELECTRIC'
-};
-
-const gengar = {
-    name: 'GENGAR',
-    id: 94,
-    weight: 405,
-    height: 15,
-    hp: 60,
-    attack: 65,
-    defense: 60,
-    specialAttack: 130,
-    specialDefense: 75,
-    speed: 110,
-    imgSrc: 'front_default',
-    type: ['GHOST', 'POISON']
-};
-
-function fetchPokemon() {
-
+async function fetchPokemon() {
+    const userInput = checkInput();
+    if (!userInput) return; 
+    const url = `https://pokeapi-proxy.freecodecamp.rocks/api/pokemon/${userInput}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
 };
 
 function checkInput() {
     const searchInput = searchInputElement.value;
-    if (searchInput ) {
-        const cleanedInput = searchInput.trim().toUpperCase();
-        switch(cleanedInput) {
-            case pikachu.name.toUpperCase():
-            case String(pikachu.id):
-                renderPokemon(pikachu);
-                console.log('Pokémon name:' + pikachu.name, 'Pokémon ID:' + pikachu.id);
-                break;
-            case gengar.name.toUpperCase():
-            case String(gengar.id):
-                renderPokemon(gengar);
-                console.log('Pokémon name:' + gengar.name, 'Pokémon ID:' + gengar.id);
-                break;
-            default: 
-                alert("Pokémon not found");
-        }
+    if (searchInput) {
+        const cleanedInput = String(searchInput.trim().toLowerCase().replace(/\s+/g, '-'));
+        return cleanedInput;
     } else {
         alert('Please enter a Pokémon name or ID');
+        return null;
     }
 };
 
 function renderPokemon(pokemon) {
     nameSpan.innerText = `${pokemon.name}`;
     pokemonIdSpan.innerText = `${pokemon.id}`;
-    weightSpan.innerText = `${pokemon.weight}`;
-    heightSpan.innerText = `${pokemon.height}`;
-    spriteImg.src = `${pokemon.imgSrc}`;
-    pokemon.id === 94? typesDiv.innerText = `${pokemon.type[0]}, ${pokemon.type[1]}`: typesDiv.innerText = pokemon.type;
-    hpTd.innerText = `${pokemon.hp}`;
-    attackTd.innerText = `${pokemon.attack}`;
-    defenseTd.innerText = `${pokemon.defense}`;
-    specialAttackTd.innerText = `${pokemon.specialAttack}`;
-    specialDefenseTd.innerText = `${pokemon.specialDefense}`;
-    speedTd.innerText = `${pokemon.speed}`;
+    weightSpan.innerText = `Weight: ${pokemon.weight}`;
+    heightSpan.innerText = `Height: ${pokemon.height}`;
+    spriteImg.src = pokemon.sprites.front_default; 
+    typesDiv.innerText = pokemon.types.map(type => type.type.name).join(' / '); 
+    hpTd.innerText = `${pokemon.stats[0].base_stat}`;
+    attackTd.innerText = `${pokemon.stats[1].base_stat}`;
+    defenseTd.innerText = `${pokemon.stats[2].base_stat}`;
+    specialAttackTd.innerText = `${pokemon.stats[3].base_stat}`;
+    specialDefenseTd.innerText = `${pokemon.stats[4].base_stat}`;
+    speedTd.innerText = `${pokemon.stats[5].base_stat}`;
 };
 
-
-searchButton.addEventListener('click', (event) => {
+searchButton.addEventListener('click', async (event) => {
     event.preventDefault();
-    checkInput();
+    try {
+        const pokemon = await fetchPokemon(); 
+        if (pokemon) {
+            renderPokemon(pokemon);  
+        }
+    } catch (error) {
+        console.error("Error fetching Pokémon data:", error);
+    }
 });
