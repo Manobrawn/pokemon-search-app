@@ -8,12 +8,19 @@ async function fetchPokemon() {
     if (!userInput) return; 
     const url = `https://pokeapi-proxy.freecodecamp.rocks/api/pokemon/${userInput}`;
     const res = await fetch(url);
+
+    if (!res.ok) {
+        alert("Pokémon not found");
+        return null;
+    }
+
     const data = await res.json();
     return data;
 };
 
 function checkInput() {
     const searchInput = searchInputElement.value;
+
     if (searchInput) {
         const cleanedInput = String(searchInput.trim().toLowerCase().replace(/\s+/g, '-'));
         return cleanedInput;
@@ -40,6 +47,7 @@ function renderPokemon(pokemon) {
 
 searchButton.addEventListener('click', async (event) => {
     event.preventDefault();
+
     try {
         const pokemon = await fetchPokemon(); 
         if (pokemon) {
@@ -48,4 +56,5 @@ searchButton.addEventListener('click', async (event) => {
     } catch (error) {
         console.error("Error fetching Pokémon data:", error);
     }
+    searchInputElement.value = '';
 });
