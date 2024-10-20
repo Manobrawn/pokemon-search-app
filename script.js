@@ -67,8 +67,3 @@ searchButton.addEventListener('click', async (event) => {
     }
     searchInputElement.value = '';
 });
-
-//The #types test is expecting nested elements for the values. You can update the map to return elements with the values and update innerText to innerHTML.
-
-// the #types element should contain a single inner element with the value ELECTRIC
-// the #types element should contain two inner elements with the text values GHOST and POISON
