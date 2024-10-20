@@ -36,7 +36,16 @@ function renderPokemon(pokemon) {
     weightSpan.innerText = `Weight: ${pokemon.weight}`;
     heightSpan.innerText = `Height: ${pokemon.height}`;
     spriteImg.src = pokemon.sprites.front_default; 
-    typesDiv.innerText = pokemon.types.map(type => type.type.name).join(' / '); 
+
+    typesDiv.innerHTML = '';
+
+    pokemon.types.forEach((typeInfo) => {
+        const typeElement = document.createElement('div');
+        typeElement.innerHTML = typeInfo.type.name;
+        typeElement.classList.add(`${typeInfo.type.name}`);
+        typesDiv.appendChild(typeElement);
+    });
+    
     hpTd.innerText = `${pokemon.stats[0].base_stat}`;
     attackTd.innerText = `${pokemon.stats[1].base_stat}`;
     defenseTd.innerText = `${pokemon.stats[2].base_stat}`;
@@ -58,3 +67,8 @@ searchButton.addEventListener('click', async (event) => {
     }
     searchInputElement.value = '';
 });
+
+//The #types test is expecting nested elements for the values. You can update the map to return elements with the values and update innerText to innerHTML.
+
+// the #types element should contain a single inner element with the value ELECTRIC
+// the #types element should contain two inner elements with the text values GHOST and POISON
