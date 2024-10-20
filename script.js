@@ -10,7 +10,7 @@ async function fetchPokemon() {
     const res = await fetch(url);
 
     if (!res.ok) {
-        alert("Pokémon not found");
+        alert('Pokémon not found');
         return null;
     }
 
@@ -63,7 +63,7 @@ searchButton.addEventListener('click', async (event) => {
             renderPokemon(pokemon);  
         }
     } catch (error) {
-        console.error("Error fetching Pokémon data:", error);
+        console.error('Error fetching Pokémon data:', error);
     }
     searchInputElement.value = '';
 });
