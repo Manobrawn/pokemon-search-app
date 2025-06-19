@@ -1,1 +1,1 @@
-https://manobrawn.github.io/pokemon-Search-App/
+https://manobrawn.github.io/pokemon-search-app/
